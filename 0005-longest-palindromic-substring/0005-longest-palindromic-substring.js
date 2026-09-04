@@ -1,10 +1,4 @@
-/**
- * @param {string} s
- * @return {string}
- */
-var longestPalindrome = function(s) {
-    if (s.length < 2) return s;
-
+function longestPalindrome(s) {
     let start = 0;
     let end = 0;
 
@@ -22,16 +16,21 @@ var longestPalindrome = function(s) {
     }
 
     for (let i = 0; i < s.length; i++) {
-        let len1 = expand(i, i);       // Odd length palindrome
-        let len2 = expand(i, i + 1);   // Even length palindrome
+        let odd = expand(i, i);
+        let even = expand(i, i + 1);
 
-        let maxLen = Math.max(len1, len2);
+        let maxLen = Math.max(odd, even);
 
-        if (maxLen > end - start + 1) {
+        if (maxLen > end - start) {
             start = i - Math.floor((maxLen - 1) / 2);
             end = i + Math.floor(maxLen / 2);
         }
     }
 
     return s.substring(start, end + 1);
-};
+}
+
+// Test Cases
+console.log(longestPalindrome("babad")); // "bab" or "aba"
+console.log(longestPalindrome("cbbd"));  // "bb"
+console.log(longestPalindrome("racecar")); // "racecar"
