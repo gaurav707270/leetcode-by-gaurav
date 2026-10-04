@@ -3,22 +3,21 @@
  * @return {number}
  */
 var reverse = function(x) {
-    let sign = x < 0 ? -1 : 1;
-    x = Math.abs(x);
 
-    let rev = 0;
+    let result = 0;
 
-    while (x > 0) {
+    while (x !== 0) {
+
         let digit = x % 10;
-        rev = rev * 10 + digit;
-        x = Math.floor(x / 10);
+
+        x = Math.trunc(x / 10);
+
+        result = result * 10 + digit;
     }
 
-    rev *= sign;
-
-    if (rev < -(2 ** 31) || rev > (2 ** 31) - 1) {
+    if (result > 2147483647 || result < -2147483648) {
         return 0;
     }
 
-    return rev;
+    return result;
 };
