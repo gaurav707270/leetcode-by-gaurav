@@ -4,21 +4,35 @@
  * @return {string}
  */
 var convert = function(s, numRows) {
-    if (numRows === 1 || numRows >= s.length) return s;
 
-    let rows = new Array(numRows).fill("");
-    let currentRow = 0;
-    let goingDown = false;
+    if (numRows === 1 || numRows >= s.length) {
+        return s;
+    }
 
-    for (let char of s) {
-        rows[currentRow] += char;
+    let rows = [];
 
-        if (currentRow === 0 || currentRow === numRows - 1) {
-            goingDown = !goingDown;
+    for (let i = 0; i < numRows; i++) {
+        rows.push("");
+    }
+
+    let row = 0;
+    let direction = 1;
+
+    for (let i = 0; i < s.length; i++) {
+
+        rows[row] += s[i];
+
+        if (row === 0) {
+            direction = 1;
         }
 
-        currentRow += goingDown ? 1 : -1;
+        if (row === numRows - 1) {
+            direction = -1;
+        }
+
+        row += direction;
     }
 
     return rows.join("");
 };
+    
