@@ -1,38 +1,41 @@
-/**
- * @param {string} s
- * @return {number}
- */
 var myAtoi = function(s) {
+
     let i = 0;
     let sign = 1;
     let result = 0;
 
-    const INT_MAX = 2147483647;
-    const INT_MIN = -2147483648;
-
-    // Step 1: Skip leading spaces
-    while (i < s.length && s[i] === " ") {
+    // 1. Leading spaces skip karo
+    while (s[i] === " ") {
         i++;
     }
 
-    // Step 2: Check sign
-    if (i < s.length && (s[i] === "+" || s[i] === "-")) {
-        if (s[i] === "-") sign = -1;
+    // 2. Sign check karo
+    if (s[i] === "-") {
+        sign = -1;
+        i++;
+    } else if (s[i] === "+") {
         i++;
     }
 
-    // Step 3: Convert digits
-    while (i < s.length && s[i] >= "0" && s[i] <= "9") {
-        let digit = s[i].charCodeAt(0) - "0".charCodeAt(0);
+    // 3. Digits read karo
+    while (i < s.length) {
+
+        let digit = s.charCodeAt(i) - 48;
+
+        // Agar digit nahi hai to stop
+        if (digit < 0 || digit > 9) {
+            break;
+        }
 
         result = result * 10 + digit;
 
-        // Step 4: Clamp to 32-bit signed integer
-        if (sign * result > INT_MAX) return INT_MAX;
-        if (sign * result < INT_MIN) return INT_MIN;
+        // 4. Range check
+        if (result > 2147483647) {
+            return sign === 1 ? 2147483647 : -2147483648;
+        }
 
         i++;
     }
 
-    return sign * result;
+    return result * sign;
 };
