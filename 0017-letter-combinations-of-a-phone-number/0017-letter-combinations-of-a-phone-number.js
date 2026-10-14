@@ -1,7 +1,10 @@
-var letterCombinations = function(digits) {
-    if (digits.length === 0) return [];
 
-    const map = {
+var letterCombinations = function(digits) {
+    if (digits.length === 0) {
+        return [];
+    }
+
+    let phone = {
         "2": "abc",
         "3": "def",
         "4": "ghi",
@@ -12,18 +15,18 @@ var letterCombinations = function(digits) {
         "9": "wxyz"
     };
 
-    const result = [];
+    let result = [];
 
-    function backtrack(index, current) {
+    function backtrack(index, combination) {
         if (index === digits.length) {
-            result.push(current);
+            result.push(combination);
             return;
         }
 
-        const letters = map[digits[index]];
+        let letters = phone[digits[index]];
 
-        for (let ch of letters) {
-            backtrack(index + 1, current + ch);
+        for (let i = 0; i < letters.length; i++) {
+            backtrack(index + 1, combination + letters[i]);
         }
     }
 
